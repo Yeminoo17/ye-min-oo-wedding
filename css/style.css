@@ -854,10 +854,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   letter-spacing: 0.04em;
   color: var(--muted);
 }
-.qr-download {
-  margin: 0 0 0.9rem;
-  font-style: italic;
-}
 .thank-you {
   max-width: 620px;
   margin: 4rem auto 0;
@@ -973,6 +969,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .btn:hover { background: var(--rose-beige); border-color: var(--rose); color: var(--text); }
 .btn:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+
+/* Compact QR download buttons */
+.qr-download {
+  margin: 0 0 0.9rem;
+  padding: 0.38rem 0.95rem;
+  font-size: 0.62rem;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  box-shadow: none;
+}
 
 /* Hero */
 .hero {
