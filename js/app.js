@@ -487,6 +487,25 @@ document.documentElement.classList.add("js");
     });
   }
 
+  /* ---------- 8. Payment QR downloads ---------- */
+  function initQRDownloads() {
+    document.querySelectorAll(".qr-download").forEach((button) => {
+      button.addEventListener("click", () => {
+        const src = button.dataset.qrSrc;
+        const name = button.dataset.qrName;
+        if (!src || !name) return;
+
+        // Download the original file directly; the QR image itself is untouched.
+        const link = document.createElement("a");
+        link.href = src;
+        link.download = name;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
+    });
+  }
+
   /* ---------- Boot ---------- */
   function init() {
     initCountdown();
@@ -495,6 +514,7 @@ document.documentElement.classList.add("js");
     initNavigation();
     initMusic();
     initRSVP();
+    initQRDownloads();
   }
 
   if (document.readyState === "loading") {
