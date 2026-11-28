@@ -70,6 +70,38 @@ document.documentElement.classList.add("js");
     window.setInterval(tick, 1000);
   }
 
+  /* ---------- 2. Calendar (dates derived from the wedding date) ---------- */
+  function initCalendar() {
+    const grid = document.querySelector(".calendar__grid");
+    if (!grid) return;
+
+    // Parse the local date directly so timezone conversion cannot shift the day.
+    const [year, month, eventDay] = WEDDING.dateISO.slice(0, 10).split("-").map(Number);
+    const monthIndex = month - 1;
+    // Date#getDay() is Sunday-based; shift it to a Monday-first grid.
+    const leadingBlanks = (new Date(year, monthIndex, 1).getDay() + 6) % 7;
+    const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+
+    const cells = document.createDocumentFragment();
+    for (let i = 0; i < leadingBlanks; i++) {
+      cells.appendChild(document.createElement("span"));
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cell = document.createElement("span");
+      cell.textContent = String(day);
+      if (day === eventDay) {
+        cell.classList.add("is-event");
+        cell.setAttribute("aria-label", "Wedding day, Saturday 19 December");
+      }
+      cells.appendChild(cell);
+    }
+
+    // Keep the seven weekday headings and rebuild only the date cells.
+    Array.from(grid.children).slice(7).forEach((cell) => cell.remove());
+    grid.appendChild(cells);
+  }
+
   /* ---------- 3. Fade-up reveals (GSAP + graceful fallback) ---------- */
   function initReveals() {
     const items = Array.from(document.querySelectorAll(".reveal"));
@@ -509,6 +541,7 @@ document.documentElement.classList.add("js");
   /* ---------- Boot ---------- */
   function init() {
     initCountdown();
+    initCalendar();
     initReveals();
     initScrollUI();
     initNavigation();
